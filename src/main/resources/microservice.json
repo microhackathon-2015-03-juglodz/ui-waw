@@ -7,6 +7,12 @@
       },
       "client-service": {
         "path": "com/ofg/client-service-waw"
+      },
+      "decision-maker-service": {
+        "path": "com/ofg/loan-application-decision-maker-waw"
+      },
+      "marketing-offer-generator-service": {
+        "path": "com/ofg/marketing-offer-generator-waw"
       }
     }
   }
