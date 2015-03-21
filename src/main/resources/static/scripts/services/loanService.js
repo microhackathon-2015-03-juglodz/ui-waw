@@ -5,7 +5,13 @@ angular.module('BootstrapApplication.services')
         return {
             apply: function(user) {
                 return $http.post('/loan', user);
+            },
+
+            getDecisions: function() {
+                return $http.get('/decisions')
             }
+
+
         };
     }
 ]);

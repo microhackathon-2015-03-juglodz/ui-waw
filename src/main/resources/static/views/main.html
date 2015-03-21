@@ -7,7 +7,7 @@
 
     <p class="lead">
 
-    <h4>Loan Application Form</h4>
+    <h4>Apply for a loan</h4>
 
     <form role="form" ng-submit="applyForLoan()">
         <div class="form-group">
@@ -24,7 +24,8 @@
         </div>
         <div class="form-group">
             <label for="position">Job Position</label>
-            <input type="text" class="form-control" id="position" placeholder="Job Position" ng-model="user.position" required>
+            <input type="text" class="form-control" id="position" placeholder="Job Position" ng-model="user.position"
+                   required>
         </div>
         <div class="form-group">
             <label for="amount">Amount</label>
@@ -34,5 +35,24 @@
     </form>
 
     <hr/>
+
+    <h4>Loan Application Decisions</h4>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Loan ID</td>
+            <td>Decision</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="decision in decisions">
+            <td>{{decision.loanId}}</td>
+            <td>{{decision.decision}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-default" ng-click="getDecisions()">Refresh</button>
 
 </div>
