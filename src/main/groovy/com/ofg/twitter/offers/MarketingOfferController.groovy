@@ -36,16 +36,18 @@ class MarketingOfferController {
 
             log.debug("Applicant = {}", applicant)
 
-            def offer = marketingOfferClient.getOffer(applicant.getfName(), applicant.getlName())
-            log.debug("Offer = {}", offer)
+            def offer = marketingOfferClient.getOffer(applicant)
 
             if (null != offer) {
                 offers.add(offer)
             } else {
-                offers.add(new MarketingOffer(name: applicant.fName + " " + applicant.lName, marketingOffer: null ))
+                offers.add(new MarketingOffer(name: applicant.getFullName(), marketingOffer: null ))
             }
+
+            log.debug("Offer = {}", offer)
         }
 
+        log.debug("Returning offers: {}", offers)
         return offers
     }
 

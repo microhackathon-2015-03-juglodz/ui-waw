@@ -5,6 +5,7 @@ import com.nurkiewicz.asyncretry.AsyncRetryExecutor
 import com.ofg.infrastructure.discovery.ServiceUnavailableException
 import com.ofg.infrastructure.web.resttemplate.fluent.ServiceRestClient
 import com.ofg.twitter.config.Collaborators
+import com.ofg.twitter.loan.Applicant
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -21,17 +22,16 @@ class MarketingOfferClient {
     @Autowired
     AsyncRetryExecutor executor
 
-    def getOffer = { String firstName, String lastName ->
-
+    MarketingOffer getOffer(Applicant applicant) {
         try {
-            def offer = doCallGetOffer(firstName, lastName)
-
-            offer.name = firstName + " " + lastName
+            def offer = doCallGetOffer(applicant.fName, applicant.lName)
+            offer.name = applicant.getFullName()
 
             return offer
 
         } catch (ServiceUnavailableException e) {
             log.info("Cannot connect to collabolator", e)
+            return null;
         }
 
     }

@@ -13,4 +13,8 @@ class Applicant {
     String position;
     double amount;
 
+    String getFullName() {
+        return fName + " " + lName
+    }
+
 }
