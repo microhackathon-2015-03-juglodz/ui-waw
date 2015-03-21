@@ -42,7 +42,7 @@ class LoanApplicationService {
                 .retryUsing(executor.withMaxRetries(3))
                 .post()
                 .withCircuitBreaker(HystrixCommand.Setter.withGroupKey({ 'sendingLoanDetails' }),
-                { log.debug("Breaking circuit") })
+                { log.info("Breaking circuit") })
 
                 .onUrl("/api/loanApplication")
                 .body(new JsonBuilder(loan).toString())
@@ -67,7 +67,7 @@ class LoanApplicationService {
                 .retryUsing(executor.withMaxRetries(3))
                 .post()
                 .withCircuitBreaker(HystrixCommand.Setter.withGroupKey({ 'sendingClientDetails' }),
-                { log.debug("Breaking circuit") })
+                { log.info("Breaking circuit") })
                 .onUrl("/api/client")
                 .body(new JsonBuilder(client).toString())
                 .ignoringResponse()
