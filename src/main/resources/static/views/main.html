@@ -9,28 +9,28 @@
 
     <h4>Loan Application Form</h4>
 
-    <form role="form">
+    <form role="form" ng-submit="applyForLoan()">
         <div class="form-group">
             <label for="fName">Name</label>
-            <input type="text" class="form-control" id="fName" placeholder="First Name" ng-model="user.fName">
+            <input type="text" class="form-control" id="fName" placeholder="First Name" ng-model="user.fName" required>
         </div>
         <div class="form-group">
             <label for="lName">Surname</label>
-            <input type="text" class="form-control" id="lName" placeholder="Last Name" ng-model="user.lName">
+            <input type="text" class="form-control" id="lName" placeholder="Last Name" ng-model="user.lName" required>
         </div>
         <div class="form-group">
             <label for="age">Age</label>
-            <input type="text" class="form-control" id="age" placeholder="Age" ng-model="user.age">
+            <input type="number" class="form-control" id="age" placeholder="Age" ng-model="user.age" required>
         </div>
         <div class="form-group">
             <label for="position">Job Position</label>
-            <input type="text" class="form-control" id="position" placeholder="Job Position" ng-model="user.position">
+            <input type="text" class="form-control" id="position" placeholder="Job Position" ng-model="user.position" required>
         </div>
         <div class="form-group">
             <label for="amount">Amount</label>
-            <input type="text" class="form-control" id="amount" placeholder="Amount" ng-model="user.amount">
+            <input type="number" class="form-control" id="amount" placeholder="Amount" ng-model="user.amount" required>
         </div>
-        <button type="button" class="btn btn-default" ng-click="applyForLoan()">Apply</button>
+        <button type="submit" class="btn btn-default">Apply</button>
     </form>
 
     <hr/>
