@@ -41,7 +41,7 @@ class DecisionMakerClient {
                 .withGroupKey({ 'sendingLoanDetails' })
                 .andCommandKey(HystrixCommandKey.Factory.asKey("Command")),
                 { log.debug("Breaking the circuit"); return null})
-                .onUrl("/api/loanApplication" + loanId)
+                .onUrl("/api/loanApplication/" + loanId)
                 .andExecuteFor()
                 .anObject()
                 .ofType(Decision.class)
