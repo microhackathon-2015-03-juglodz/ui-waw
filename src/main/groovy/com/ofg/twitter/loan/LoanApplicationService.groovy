@@ -1,6 +1,7 @@
 package com.ofg.twitter.loan
 
 import com.netflix.hystrix.HystrixCommand
+import com.netflix.hystrix.HystrixCommandKey
 import com.nurkiewicz.asyncretry.AsyncRetryExecutor
 import com.ofg.infrastructure.discovery.ServiceUnavailableException
 import com.ofg.infrastructure.web.resttemplate.fluent.ServiceRestClient
@@ -41,7 +42,9 @@ class LoanApplicationService {
                 .forService(Collaborators.LOAN_APPLICATION_SERVICE_DEPENDENCY_NAME)
                 .retryUsing(executor.withMaxRetries(3))
                 .post()
-                .withCircuitBreaker(HystrixCommand.Setter.withGroupKey({ 'sendingLoanDetails' }),
+                .withCircuitBreaker(HystrixCommand.Setter
+                .withGroupKey({ 'sendingLoanDetails' })
+                .andCommandKey(HystrixCommandKey.Factory.asKey("Command")),
                 { log.info("Breaking circuit") })
                 .onUrl("/api/loanApplication")
                 .body(new JsonBuilder(loan).toString())
@@ -66,7 +69,9 @@ class LoanApplicationService {
         serviceRestClient.forService(Collaborators.CLIENT_SERVICE_DEPENDENCY_NAME)
                 .retryUsing(executor.withMaxRetries(3))
                 .post()
-                .withCircuitBreaker(HystrixCommand.Setter.withGroupKey({ 'sendingClientDetails' }),
+                .withCircuitBreaker(HystrixCommand.Setter
+                .withGroupKey({ 'sendingClientDetails' })
+                .andCommandKey(HystrixCommandKey.Factory.asKey("Command")),
                 { log.info("Breaking circuit") })
                 .onUrl("/api/client")
                 .body(new JsonBuilder(client).toString())
