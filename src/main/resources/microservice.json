@@ -1,10 +1,13 @@
 {
-    "waw": {
-        "this": "com/ofg/ui-waw",
-        "dependencies": {
-            "collerator": {
-                "path": "com/ofg/some-other-service"
-            }
-        }
+  "waw": {
+    "this": "com/ofg/ui-waw",
+    "dependencies": {
+      "loan-application-service": {
+        "path": "com/ofg/loan-application-service-waw"
+      },
+      "client-service": {
+        "path": "com/ofg/client-service-waw"
+      }
     }
+  }
 }

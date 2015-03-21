@@ -5,34 +5,23 @@
  * # MainCtrl
  */
 angular.module('BootstrapApplication.controllers')
-        .controller('MainCtrl', ['$scope', 'CityService', function ($scope, CityService) {
-            $scope.awesomeThings = [
-                'HTML5 Boilerplate',
-                'AngularJS',
-                'Karma'
-            ];
+        .controller('MainCtrl', ['$scope', 'LoanService', function ($scope, LoanService) {
 
-            $scope.coords = {
-                lat: '52.232222',
-                lon: '21.008333'
+            $scope.user={
+                fName: "Test",
+                lName: "Test2",
+                age: 36,
+                position: "IT",
+                amount: 100
             };
 
-            $scope.alerts = [];
+            $scope.applyForLoan = function() {
+                console.log($scope.user);
+                LoanService.apply($scope.user).then(function(data) {
 
-            $scope.city = '';
+                })
 
-            $scope.findCity = function() {
-                CityService
-                    .findCity($scope.coords)
-                    .success(function (data) {
-                        $scope.city = data;
-                    })
-                    .error(function(reason) {
-                        $scope.alerts = [{msg: reason}];
-                    });
-            };
 
-            $scope.closeAlert = function (index) {
-                $scope.alerts.splice(index, 1);
-            };
+            }
+
         }]);
