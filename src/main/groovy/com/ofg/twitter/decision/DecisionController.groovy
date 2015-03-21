@@ -31,7 +31,7 @@ class DecisionController {
             if (null != decision) {
                 decisions.add(decision)
             } else {
-                decisions.add(new Decision(loanId: loanId, decision: null))
+                decisions.add(new Decision(applicationId: loanId, result: null))
             }
         }
 
