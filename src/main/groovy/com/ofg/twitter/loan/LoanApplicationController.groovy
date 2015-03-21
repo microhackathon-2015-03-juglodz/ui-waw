@@ -20,6 +20,9 @@ class LoanApplicationController {
     LoanApplicationService loanApplicationService;
 
     @Autowired
+    ApplicantsHolder applicantsHolder
+
+    @Autowired
     LoanIdGenerator loanIdGenerator
 
     @RequestMapping(method = POST)
@@ -29,11 +32,15 @@ class LoanApplicationController {
 
         String loanId = loanIdGenerator.nextLoanId
 
+        applicantsHolder.addApplicant(loanId, applicant)
+
         loanApplicationService.sendClientDetails(
                 new Client(firstName: applicant.fName, lastName: applicant.lName, age: applicant.age, loanId: loanId))
 
         loanApplicationService.applyForLoan(
                 new Loan(loanId: loanId, amount: applicant.amount))
+
+
 
     }
 

@@ -9,7 +9,12 @@ angular.module('BootstrapApplication.services')
 
             getDecisions: function() {
                 return $http.get('/decisions')
+            },
+
+            getMarketingOffers: function() {
+                return $http.get('/offers')
             }
+
 
 
         };

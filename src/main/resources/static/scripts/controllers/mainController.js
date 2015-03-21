@@ -32,6 +32,14 @@ angular.module('BootstrapApplication.controllers')
                 $scope.decisions = decisions.data
             })
 
+        };
+
+        $scope.getMarketingOffers = function () {
+            LoanService.getMarketingOffers().then(function (offers) {
+                console.log(offers);
+                $scope.offers = offers.data
+            })
+
         }
 
     }]);

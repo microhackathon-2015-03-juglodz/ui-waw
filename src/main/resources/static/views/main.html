@@ -55,4 +55,25 @@
 
     <button type="button" class="btn btn-default" ng-click="getDecisions()">Refresh</button>
 
+    <hr/>
+
+    <h4>Marketing offers</h4>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Name</td>
+            <td>Offer</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="offer in offers">
+            <td>{{offer.name}}</td>
+            <td>{{offer.marketingOffer || 'Not Available'}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-default" ng-click="getMarketingOffers()">Refresh</button>
+
 </div>

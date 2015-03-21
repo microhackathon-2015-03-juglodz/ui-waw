@@ -1,4 +1,4 @@
-package com.ofg.twitter.decision
+package com.ofg.twitter.offers
 import com.netflix.hystrix.HystrixCommand
 import com.netflix.hystrix.HystrixCommandKey
 import com.nurkiewicz.asyncretry.AsyncRetryExecutor
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
  */
 @Slf4j
 @Component
-class DecisionMakerClient {
+class MarketingOfferClient {
 
     @Autowired
     ServiceRestClient serviceRestClient
@@ -21,10 +21,14 @@ class DecisionMakerClient {
     @Autowired
     AsyncRetryExecutor executor
 
-    def getDecision = { String loanId ->
+    def getOffer = { String firstName, String lastName ->
 
         try {
-            return doCallGetDecision(loanId)
+            def offer = doCallGetOffer(firstName, lastName)
+
+            offer.name = firstName + " " + lastName
+
+            return offer
 
         } catch (ServiceUnavailableException e) {
             log.info("Cannot connect to collabolator", e)
@@ -32,18 +36,18 @@ class DecisionMakerClient {
 
     }
 
-    private Decision doCallGetDecision(String loanId) {
+    private MarketingOffer doCallGetOffer(String firstName, String lastName) {
         return serviceRestClient
                 .forService(Collaborators.DECISION_MAKER_SERVICE_DEPENDENCY_NAME)
                 .retryUsing(executor.withMaxRetries(3))
                 .get()
                 .withCircuitBreaker(HystrixCommand.Setter
-                .withGroupKey({ 'gettingDecisions' })
+                .withGroupKey({ 'gettingMarketingOffers' })
                 .andCommandKey(HystrixCommandKey.Factory.asKey("Command")),
                 { log.debug("Breaking the circuit"); return null})
-                .onUrl("/api/loanApplication/" + loanId)
+                .onUrl("/api/marketing/" + firstName + "_" + lastName)
                 .andExecuteFor()
                 .anObject()
-                .ofType(Decision.class)
+                .ofType(MarketingOffer.class)
     }
 }
