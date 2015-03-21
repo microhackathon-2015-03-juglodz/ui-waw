@@ -41,7 +41,9 @@ class LoanApplicationService {
                 .forService(Collaborators.LOAN_APPLICATION_SERVICE_DEPENDENCY_NAME)
                 .retryUsing(executor.withMaxRetries(3))
                 .post()
-                .withCircuitBreaker(HystrixCommand.Setter.withGroupKey({ 'sendingLoanDetails' }))
+                .withCircuitBreaker(HystrixCommand.Setter.withGroupKey({ 'sendingLoanDetails' }),
+                { log.debug("Breaking circuit") })
+
                 .onUrl("/api/loanApplication")
                 .body(new JsonBuilder(loan).toString())
                 .andExecuteFor()
@@ -64,7 +66,8 @@ class LoanApplicationService {
         serviceRestClient.forService(Collaborators.CLIENT_SERVICE_DEPENDENCY_NAME)
                 .retryUsing(executor.withMaxRetries(3))
                 .post()
-                .withCircuitBreaker(HystrixCommand.Setter.withGroupKey({ 'sendingClientDetails' }))
+                .withCircuitBreaker(HystrixCommand.Setter.withGroupKey({ 'sendingClientDetails' }),
+                { log.debug("Breaking circuit") })
                 .onUrl("/api/client")
                 .body(new JsonBuilder(client).toString())
                 .ignoringResponse()
