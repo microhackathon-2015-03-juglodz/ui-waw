@@ -39,6 +39,7 @@ class MarketingOfferController {
             def offer = marketingOfferClient.getOffer(applicant)
 
             if (null != offer) {
+                offer.name = applicant.getFullName()
                 offers.add(offer)
             } else {
                 offers.add(new MarketingOffer(name: applicant.getFullName(), marketingOffer: null ))

@@ -24,10 +24,7 @@ class MarketingOfferClient {
 
     MarketingOffer getOffer(Applicant applicant) {
         try {
-            def offer = doCallGetOffer(applicant.fName, applicant.lName)
-            offer.name = applicant.getFullName()
-
-            return offer
+            return doCallGetOffer(applicant.fName, applicant.lName)
 
         } catch (ServiceUnavailableException e) {
             log.info("Cannot connect to collabolator", e)
