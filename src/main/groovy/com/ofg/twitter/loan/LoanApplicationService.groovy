@@ -43,9 +43,9 @@ class LoanApplicationService {
                 .post()
                 .withCircuitBreaker(HystrixCommand.Setter.withGroupKey({ 'sendingLoanDetails' }),
                 { log.info("Breaking circuit") })
-
                 .onUrl("/api/loanApplication")
                 .body(new JsonBuilder(loan).toString())
+                .withHeaders().contentTypeJson()
                 .andExecuteFor()
                 .ignoringResponse()
     }
@@ -70,6 +70,8 @@ class LoanApplicationService {
                 { log.info("Breaking circuit") })
                 .onUrl("/api/client")
                 .body(new JsonBuilder(client).toString())
+                .withHeaders().contentTypeJson()
+                .andExecuteFor()
                 .ignoringResponse()
     }
 
