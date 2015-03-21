@@ -1,5 +1,6 @@
 package com.ofg.twitter.decision
 import com.netflix.hystrix.HystrixCommand
+import com.netflix.hystrix.HystrixCommandKey
 import com.nurkiewicz.asyncretry.AsyncRetryExecutor
 import com.ofg.infrastructure.discovery.ServiceUnavailableException
 import com.ofg.infrastructure.web.resttemplate.fluent.ServiceRestClient
@@ -36,7 +37,9 @@ class DecisionMakerClient {
                 .forService(Collaborators.DECISION_MAKER_SERVICE_DEPENDENCY_NAME)
                 .retryUsing(executor.withMaxRetries(3))
                 .get()
-                .withCircuitBreaker(HystrixCommand.Setter.withGroupKey({ 'sendingLoanDetails' }),
+                .withCircuitBreaker(HystrixCommand.Setter
+                .withGroupKey({ 'sendingLoanDetails' })
+                .andCommandKey(HystrixCommandKey.Factory.asKey("Command")),
                 { log.debug("Breaking the circuit"); return null})
                 .onUrl("/api/loanApplication" + loanId)
                 .andExecuteFor()
